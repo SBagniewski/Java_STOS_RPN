@@ -37,4 +37,16 @@ public class StackTest {
 		assertEquals("peek_value","test",res1);
 		assertEquals("peek_size",1,res2);
 	}
+
+	@Test
+	public void testRPN()
+	{
+		MyStack stack = new MyStack();
+
+		String RPN = "2 2 - 1 +";
+
+		int result = stack.RPN(RPN);
+
+		assertEquals("RPN",1,result);
+	}
 }
