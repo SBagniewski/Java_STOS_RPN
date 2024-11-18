@@ -2,7 +2,7 @@ package mystack;
 
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
-import mystack.MyStack;  // Import MyStack
+import static org.junit.Assert.assertThrows;
 
 public class StackTest {
 
@@ -41,12 +41,37 @@ public class StackTest {
 	@Test
 	public void testRPN()
 	{
-		MyStack stack = new MyStack();
+		RPN rpn = new RPN();
 
-		String RPN = "2 2 - 1 +";
+		String znaki = "2 2 - 1 +";
 
-		int result = stack.RPN(RPN);
+		int result = rpn.ev_RPN(znaki);
 
 		assertEquals("RPN",1,result);
 	}
+	@Test
+	public void testRPNZnak()
+	{
+		RPN rpn = new RPN();
+		
+		String znaki = "2 2 i 1 x";
+
+		IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            rpn.ev_RPN(znaki);
+        });
+        
+        
+        assertEquals("Niepoprawny znak: i", thrown.getMessage());
+	}
+	@Test
+	public void testRPNDivByZero()
+	{
+		RPN rpn = new RPN();
+		String znaki = "2 0 /";
+		ArithmeticException thrown = assertThrows(ArithmeticException.class, () -> {
+			rpn.ev_RPN(znaki);
+		});
+
+		assertEquals("Dzielenie przez 0", thrown.getMessage());
+	} 
 }
